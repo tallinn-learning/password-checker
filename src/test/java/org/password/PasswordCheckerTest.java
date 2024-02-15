@@ -8,6 +8,5 @@ public class PasswordCheckerTest {
 
     @Test
     void shouldReturnTrueForComplexPasswordWithDigitsAndSpecialCharsEng() {
-         assertTrue( PasswordChecker.checkPasswordComplexity("Password123!") );
-    }
+         assertTrue( PasswordChecker.checkPasswordComplexity("Password123!") );}
 }
