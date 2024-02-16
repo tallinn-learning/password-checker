@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 public class PasswordChecker {
 
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome! ");
