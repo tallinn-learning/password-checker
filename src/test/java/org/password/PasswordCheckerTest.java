@@ -38,4 +38,12 @@ public class PasswordCheckerTest {
     void shouldReturnTrueForComplexPasswordWithSpacesNumbersSpecialChars() {
         assertTrue( PasswordChecker.checkPasswordComplexity("pa ss word123@") );
     }
+    @Test
+    void shouldReturnTrueForComplexPasswordWithOnlyUpperEngRegisterCharsNumbersSpecialChars() {
+        assertTrue( PasswordChecker.checkPasswordComplexity("PASSWORDDD123@") );
+    }
+    @Test
+    void shouldReturnTrueForComplexPasswordWithOnlyUpperRusRegisterCharsNumbersSpecialChars() {
+        assertTrue( PasswordChecker.checkPasswordComplexity("КОНСОЛИДАЦИЯ123@") );
+    }
 }
