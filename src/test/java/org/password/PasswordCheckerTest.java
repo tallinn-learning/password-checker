@@ -13,7 +13,7 @@ public class PasswordCheckerTest {
     }
     @Test
     void shouldReturnFalseNotMeetingLengthAndAdditionalRequirements(){
-        assertFalse(PasswordChecker.checkPasswordComplexity("Short"));
+        assertFalse(PasswordChecker.checkPasswordComplexity("short"));
     }
     @Test
     void shouldReturnFalseNotMeetingOnlyLengthRequirements() {
