@@ -18,6 +18,11 @@ public class PasswordCheckerTest {
     }
 
     @Test
+    void shouldReturnFalseNotMeetingLengthAndAdditionalRequirements(){
+        assertFalse(PasswordChecker.checkPasswordComplexity("short"));
+    }
+
+    @Test
     void shouldReturnFalseNotMeetingOnlyLengthRequirements() {
         assertFalse(PasswordChecker.checkPasswordComplexity("Short1@"));
     }
@@ -27,14 +32,16 @@ public class PasswordCheckerTest {
         assertFalse(PasswordChecker.checkPasswordComplexity("Password@"));
     }
 
+    void shouldReturnFalseForMissingDigitalCharacters(){
+        assertFalse(PasswordChecker.checkPasswordComplexity("Password@"));
+    }
+  
     @Test
     void shouldReturnFalseForMissingSpecialCharacters() {
         assertFalse(PasswordChecker.checkPasswordComplexity("Password1"));
     }
-
     @Test
     void shouldReturnFalseForMissingBothSpecialCharactersAndDigits() {
         assertFalse(PasswordChecker.checkPasswordComplexity("Password"));
     }
-
 }
