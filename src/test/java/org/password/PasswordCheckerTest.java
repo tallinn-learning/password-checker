@@ -9,21 +9,33 @@ public class PasswordCheckerTest {
 
     @Test
     void shouldReturnTrueForComplexPasswordWithDigitsAndSpecialChars() {
-         assertTrue( PasswordChecker.checkPasswordComplexity("Password123!") );
+        assertTrue(PasswordChecker.checkPasswordComplexity("Password123#"));
     }
+
+    @Test
+    void shouldReturnFalseNotMeetingLengthAndAdditionalRequirements() {
+        assertFalse(PasswordChecker.checkPasswordComplexity("short"));
+    }
+
     @Test
     void shouldReturnFalseNotMeetingLengthAndAdditionalRequirements(){
         assertFalse(PasswordChecker.checkPasswordComplexity("short"));
     }
+
     @Test
     void shouldReturnFalseNotMeetingOnlyLengthRequirements() {
         assertFalse(PasswordChecker.checkPasswordComplexity("Short1@"));
     }
 
     @Test
+    void shouldReturnFalseForMissingDigitalCharacters() {
+        assertFalse(PasswordChecker.checkPasswordComplexity("Password@"));
+    }
+
     void shouldReturnFalseForMissingDigitalCharacters(){
         assertFalse(PasswordChecker.checkPasswordComplexity("Password@"));
     }
+  
     @Test
     void shouldReturnFalseForMissingSpecialCharacters() {
         assertFalse(PasswordChecker.checkPasswordComplexity("Password1"));
