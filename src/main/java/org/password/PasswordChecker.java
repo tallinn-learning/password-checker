@@ -28,7 +28,8 @@ public class PasswordChecker {
     }
 
     public static boolean checkPasswordComplexity(String password) {
-        if (password.length() < 8) {
+
+        if (password.length() < 2) {
             return false;
         }
 
@@ -40,5 +41,7 @@ public class PasswordChecker {
 
         return digitMatcher.find() && specialCharMatcher.find();
     }
+
+
 
 }
