@@ -44,6 +44,6 @@ public class PasswordCheckerTest {
     }
     @Test
     void shouldReturnTrueForComplexPasswordWithOnlyUpperRusRegisterCharsNumbersSpecialChars() {
-        assertTrue( PasswordChecker.checkPasswordComplexity("КОНСОЛИДАЦИЯ123@") );
+        assertTrue( PasswordChecker.checkPasswordComplexity("КОНСОЛИДАЦИЯ1234@") );
     }
 }
