@@ -143,7 +143,6 @@ public class RestApiMocked {
                 log()
                 .all()
                 .when()
-//                .get("/test-orders/" + InvalidOrderId)
                 .get("/test-orders/{InvalidOrderId}", InvalidOrderId)
                 .then()
                 .log()
