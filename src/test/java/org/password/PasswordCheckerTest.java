@@ -9,7 +9,7 @@ public class PasswordCheckerTest {
 
     @Test
     void shouldReturnTrueForComplexPasswordWithDigitsAndSpecialChars() {
-         assertTrue( PasswordChecker.checkPasswordComplexity("Password123!") );
+         assertTrue( PasswordChecker.checkPasswordComplexity("Pswrd12!") );
     }
     @Test
     void shouldReturnTrueForComplexPasswordWithoutLetters() {
