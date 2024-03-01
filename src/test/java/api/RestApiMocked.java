@@ -1,10 +1,20 @@
 package api;
 
-import static io.restassured.RestAssured.*;
-
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
+import io.restassured.response.ValidatableResponseOptions;
+import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
+import static javax.management.Query.and;
 
 public class RestApiMocked {
 
@@ -27,6 +37,70 @@ public class RestApiMocked {
                 .all()
                 .statusCode(200);
     }
+    @ParameterizedTest
+    @ValueSource(ints = {1,5,9,10})
+    public void getOrdersByIdAndCheckResponseCodeIsOk(int orderId) {
+        int responseOrderId = given().
+                log()
+                .all()
+                .when()
+                .get("/test-orders/" + orderId)
+//                .get("/test-orders/{orderId}", orderId)
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.SC_OK)
+                .and()
+                .extract()
+                .path("id");
+        Assertions.assertEquals(orderId, responseOrderId);
+    }
+    
+    @ParameterizedTest
+    @ValueSource(ints = {-1,0})
+    public void getOrdersByIdAndCheckResponseCodeIsNotOk(int orderId) {
+        given().
+                log()
+                .all()
+                .when()
+                .get("/test-orders/" + orderId)
+//                .get("/test-orders/{orderId}", orderId)
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.SC_BAD_REQUEST);
+    }
+
+    // 10 Homework. Create parameterized tests to validate the endpoint and pass username and password as query
+
+    @ParameterizedTest
+    @CsvSource({
+            "username, password",
+            "username1, password1",
+            "username!, password1!",
+            "username1#, password1!",
+            "Username1!, Password1!",
+            "USER_NAME, PASS_WORD",
+            "12345, 6789"
+    })
+    public void testEndpointWithCsvSourceGetResponseIsOk(String username, String password) {
+        String response = given().
+                log()
+                .all()
+                .when()
+                .get("/test-orders?username=" + username+"&password="+ password)
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.SC_OK)
+                .and()
+                .extract()
+                .path("apiKey");
+
+        Assertions.assertNotNull(response);
+
+    }
+
 
     @Test
     public void getOrderByInvalidCheckResponseCodeIsNotOkIsBadRequest() {
