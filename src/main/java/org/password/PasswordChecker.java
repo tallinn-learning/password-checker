@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 /**
  * Hello world!
- *
  */
 public class PasswordChecker {
 
