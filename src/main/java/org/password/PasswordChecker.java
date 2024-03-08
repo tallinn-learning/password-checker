@@ -8,7 +8,8 @@ import java.util.regex.Pattern;
  * Hello world!
  *
  */
-public class PasswordChecker {
+public class
+PasswordChecker {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
