@@ -27,7 +27,7 @@ public class PasswordChecker {
 
     }
 
-    public static boolean checkPasswordComplexity(String password) {
+    public static boolean checkPasswordComplexity(@org.jetbrains.annotations.NotNull String password) {
         if (password.length() < 8) {
             return false;
         }
@@ -40,5 +40,6 @@ public class PasswordChecker {
 
         return digitMatcher.find() && specialCharMatcher.find();
     }
+
 
 }
