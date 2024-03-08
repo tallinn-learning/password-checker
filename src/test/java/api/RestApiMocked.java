@@ -1,9 +1,9 @@
 package api;
 
+import com.google.gson.Gson;
+import dto.OrderDtoMocked;
 import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
-import io.restassured.response.ValidatableResponseOptions;
+import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,17 +11,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import utils.RandomDataGenerator;
 
-import static io.restassured.RestAssured.get;
-import static io.restassured.RestAssured.given;
-import static javax.management.Query.and;
+import static io.restassured.RestAssured.*;
 
 public class RestApiMocked {
 
     @BeforeAll
     public static void setup() {
-        RestAssured.baseURI = "http://35.208.34.242";
-        RestAssured.port = 8080;
+        baseURI = "http://35.208.34.242";
+        port = 8080;
     }
 
 
@@ -275,6 +274,70 @@ public class RestApiMocked {
                 .log()
                 .all()
                 .statusCode(HttpStatus.SC_UNAUTHORIZED);
+    }
+    // 11 Classwork
+    @Test
+    public void createOrderAndCheckResponseCodeIsOk() {
+//      OrderDtoMocked orderDtoMocked = new OrderDtoMocked("OPEN", 0, "customer", "555553433", "hello", 0);
+
+        OrderDtoMocked orderDtoMocked = new OrderDtoMocked();
+
+
+
+        orderDtoMocked.setStatus("OPEN");
+        orderDtoMocked.setComment("comment");
+        orderDtoMocked.setCourierId(0);
+        orderDtoMocked.setCustomerName(RandomDataGenerator.generateName());
+        orderDtoMocked.setCustomerPhone(RandomDataGenerator.generateCustomerPhone()); // generated random phone number that contains only numerics
+        orderDtoMocked.setComment(RandomDataGenerator.generateComment()); // generated random alphanumeric comment which length 50 characters
+        orderDtoMocked.setId(1);
+
+        given().
+                header("Content-Type", "application/json")
+                .log()
+                .all()
+                .when()
+                .body(new Gson().toJson(orderDtoMocked))
+                .post("/test-orders")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.SC_OK);
+
+    }
+
+    // 11 HOMEWORK test for PUT method with generated random values.
+    @Test
+    public void updateOrderAndCheckResponseCodeIsOk() {
+        OrderDtoMocked orderDtoMocked = new OrderDtoMocked();
+
+        orderDtoMocked.setStatus("OPEN");
+        orderDtoMocked.setComment("comment");
+        orderDtoMocked.setCourierId(0);
+        orderDtoMocked.setCustomerName(RandomDataGenerator.generateName());
+        orderDtoMocked.setCustomerPhone(RandomDataGenerator.generateCustomerPhone()); // generated random phone number that contains only numerics
+        orderDtoMocked.setComment(RandomDataGenerator.generateComment()); // generated random alphanumeric comment which length 50 characters
+        orderDtoMocked.setId(5);
+
+
+        RestAssured.given()
+               .baseUri("http://35.208.34.242:8080")
+                .header("accept", "application/json")
+                .header("api_key", "1234567890123456")
+                .contentType(ContentType.JSON)
+               .body(new Gson().toJson(orderDtoMocked))
+                //.body(new Gson().toJson(orderDtoMocked))
+                .put("/test-orders/5")
+                //.put("/test-orders/{id}", orderDtoMocked.getId())  // no need to indicate twice id
+                //.put()
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.SC_OK);
+               // .body(matchesJsonSchemaInClasspath("response-schema,json"));
+                //.body() //(matchesJsonSchemaInClasspath("response-schema,json"));
+
+
     }
 
 }
