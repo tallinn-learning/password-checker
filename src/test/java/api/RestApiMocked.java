@@ -2,7 +2,10 @@ package api;
 
 import com.google.gson.Gson;
 import dto.OrderDtoMocked;
+import dto.OrderDtoMockedBuilderAndFactory;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -50,6 +53,68 @@ public class RestApiMocked {
                 .all()
                 .statusCode(HttpStatus.SC_OK);
     }
+    @Test
+    public void createOrderAndCheckResponseBody() {
+        //OrderDtoMocked orderDtoMocked= new OrderDtoMocked("OPEN",0,"customer","56473256","hello",0);
+        OrderDtoMocked orderDtoMocked = new OrderDtoMocked();
+
+        // If Public OrderDtoMocked.comment="comm";
+
+        orderDtoMocked.setStatus("OPEN");
+        orderDtoMocked.setCourierId(0);
+        orderDtoMocked.setCustomerName(RandomDataGenerator.generateName());
+        orderDtoMocked.setCustomerPhone("4563623782");
+        orderDtoMocked.setComment("comment");
+        orderDtoMocked.setId(1);
+
+        Gson gson=new Gson();
+        Response response=given()
+                .contentType(ContentType.JSON)
+                .log()
+                .all()
+                .when()
+                .body(new Gson().toJson(orderDtoMocked))
+                .post("/test-orders")
+                .then()
+                .extract()
+                .response();
+        //deserialization
+        OrderDtoMocked orderReceived=gson.fromJson(response.asString(),OrderDtoMocked.class);
+
+    }
+    @Test
+    public void updateOrderStatus() {
+
+//        OrderDtoMockedBuilderAndFactory orderDtoMockedBuilderAndFactory = OrderDtoMockedBuilderAndFactory.builder()
+//                        .status("OPEN")
+//                        .courierId(0)
+//                        .customerName(RandomDataGenerator.generateName())
+//                        .customerPhone("4563623782")
+//                        .comment("comment")
+//                        .id(1)
+//                        .build();
+
+//        orderDtoMocked.setStatus("OPEN");
+//        orderDtoMocked.setCourierId(0);
+//        orderDtoMocked.setCustomerName(RandomDataGenerator.generateName());
+//        orderDtoMocked.setCustomerPhone("4563623782");
+//        orderDtoMocked.setComment("comment");
+//        orderDtoMocked.setId(1);
+        OrderDtoMockedBuilderAndFactory orderDtoMockedBuilderAndFactory = OrderDtoMockedBuilderAndFactory.createRandomOrder();
+
+        given()
+                .header("Content-type", "application/json")
+                .log()
+                .all()
+                .when()
+                .body(new Gson().toJson(orderDtoMockedBuilderAndFactory))
+                .post("/test-orders")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.SC_OK);
+    }
+
 
     @Test
     public void getOrderByIdAndCheckResponseCodeIsOk() {
