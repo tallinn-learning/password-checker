@@ -6,7 +6,7 @@ public class OrderDtoMocked {
     private String customerName;
     private String customerPhone;
     private String comment;
-    private int id;
+    private long id;
 
     public OrderDtoMocked(String status, int courierId, String customerName, String customerPhone, String comment, int id) {
         this.status = status;
@@ -41,7 +41,7 @@ public class OrderDtoMocked {
         this.comment = comment;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }
