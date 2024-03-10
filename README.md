@@ -7,3 +7,30 @@
 | 5  | Verify Password without Special Characters (>8 symbols)                        |  Pass  |
 | 6  | Verify Password without Digits (>8 symbols)                                    |  Pass  |
 | 7  | Verify Short Password with Letters, Digits and Special Characters (<8 symbols) |  Pass  |
+
+# Homework 9
+
+### **In scope:** API testing with using Swagger 'Delete' method
+**Requirements:** 
+
+_Valid id range:_ 1-10
+
+_API key length:_ 16 digits
+
+### **Environment:**
+* Windows 11 Pro, v23H2
+* Intellij IDEA 2023.3.4 
+* SDK: OpenJDK 21.0.2
+* Apache Maven 4.0.0
+* JUnit 5.10.2
+
+### **Tests:**
+| № | Test                                               | Expected | Status |
+|:-:|:---------------------------------------------------|:--------:|:------:|
+| 1 | Verify Successful delete of Order                  | Code 204 |  Pass  |
+| 2 | Verify Deleting an Order without API key usage     | Code 400 |  Pass  |
+| 3 | Verify Deleting an Order with wrong API key length | Code 401 |  Pass  |
+| 4 | Verify Deleting an Order with invalid ID (lower)   | Code 400 |  Pass  |
+| 5 | Verify Deleting an Order with invalid ID (higher)  | Code 400 |  Pass  |
+| 6 | Verify Deleting an Order with letters in ID        | Code 400 |  Pass  |
+| 7 | Verify Deleting an Order with empty ID             | Code 405 |  Pass  |

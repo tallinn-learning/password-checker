@@ -42,4 +42,5 @@ public class PasswordCheckerTest {
     void shouldReturnFalseForShortComplexPasswordWithDigitsAndSpecialChars() {
         assertFalse(PasswordChecker.checkPasswordComplexity("Pswrd1$"));
     }
+
 }
