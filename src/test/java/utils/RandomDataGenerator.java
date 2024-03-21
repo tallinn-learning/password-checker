@@ -11,7 +11,7 @@ public class RandomDataGenerator {
         return generatedCustomerName;
     }
 
-    // 11 HOMEWORK.  generated random Phone number witch contains only numerics with RandomStringUtils
+    // 11 HOMEWORK.  generated random Phone number which contains only numerics with RandomStringUtils
     public static String generateCustomerPhone() {
         int length = 10;
         boolean useLetters = false;
